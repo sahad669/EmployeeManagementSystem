@@ -149,7 +149,7 @@ const Employees = () => {
             type="password"
             value={data.password}
             onChange={(e) => setData({ ...data, password: e.target.value })}
-            placeholder={editId ? "Password (leave blank to keep)" : "Password"}
+            placeholder={editId ? "Password " : "Password"}
             className={`p-3 rounded-lg border ${
               darkMode
                 ? "border-[#198FFF] bg-[#274472] text-[#A1F6FF] placeholder-[#7DB9DB]"
