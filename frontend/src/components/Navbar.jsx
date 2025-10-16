@@ -68,13 +68,7 @@ const Navbar = ({ title, onToggleSidebar }) => {
             </>
           ) : (
             <>
-              <div
-                className={`${
-                  darkMode ? "text-white" : "text-[#21314A]"
-                } font-semibold`}
-              >
-                Admin
-              </div>
+              
               <div className="text-xs font-bold text-[#82E0FA] capitalize">
                 Not logged in
               </div>

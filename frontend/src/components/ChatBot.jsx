@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { IoChatboxEllipses } from "react-icons/io5";
 import { X } from "lucide-react";
 import axios from "axios";
 const ChatBot = ({ isOpen, onClose }) => {

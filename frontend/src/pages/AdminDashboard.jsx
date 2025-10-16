@@ -36,6 +36,7 @@ const AdminDashboard = () => {
     dispatch(logout());
     navigate("/login");
   };
+  
   const handleLogin = () => navigate("/login");
 
   useEffect(() => {
