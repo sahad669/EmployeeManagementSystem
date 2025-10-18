@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await dispatch(login(data)).unwrap();
-      if (res.user.role === "admin") {
+      if (res?.user?.role === "admin") {
         navigate("/admin");
       } else {
         navigate("/employee");
