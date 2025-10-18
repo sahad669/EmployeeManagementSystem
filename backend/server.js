@@ -11,7 +11,7 @@ import OpenAI from 'openai'
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors({origin:"https://employee-management-system-eight-sigma.vercel.app/"}));
+app.use(cors());
 
 console.log("API Key:", process.env.OPENAI_API_KEY);
 
