@@ -10,7 +10,7 @@ export const register = createAsyncThunk("auth/register", async (data) => {
     toast.success(res.data.message);
     return res.data;
   } catch (error) {
-    const message = error.response?.data?.message
+    const message = error.response?.data?.message;
     toast.error(message);
   }
 });
@@ -22,23 +22,24 @@ export const login = createAsyncThunk("auth/login", async (data) => {
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("user", JSON.stringify(res.data.user));
     toast.success(res.data.message);
-    return res.data; 
+    return res.data;
   } catch (error) {
-    const message = error.response?.data?.message 
+    const message = error.response?.data?.message;
     toast.error(message);
-    
   }
 });
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null,
-     loading: false ,error: null },
+  initialState: { user: null, loading: false, error: null },
   reducers: {
     logout: (state) => {
       localStorage.removeItem("token");
-       localStorage.removeItem("user");
+      localStorage.removeItem("user");
       state.user = null;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
 
@@ -75,5 +76,5 @@ const authSlice = createSlice({
       });
   },
 });
-export const {logout} = authSlice.actions
+export const { logout,setUser } = authSlice.actions;
 export default authSlice.reducer;

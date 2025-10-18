@@ -97,7 +97,7 @@ const Employees = () => {
             : "bg-[#E3EDF7] border-[#5B99ED]/40"
         }`}
       >
-        <form
+        <form 
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           onSubmit={handleSubmit}
         >

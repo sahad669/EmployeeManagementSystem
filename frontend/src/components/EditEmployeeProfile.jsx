@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeById, editEmployee } from "../features/employeeSlice";
+import { setUser } from "../features/authSlice";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -37,11 +38,16 @@ const EditEmployeeProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    Object.keys(formData).forEach((key) => fd.append(key, formData[key]));
-    if (image) fd.append("image", image);
+    const updatedProfileData = new FormData();
+    Object.keys(formData).forEach((key) => updatedProfileData.append(key, formData[key]));
+    if (image) updatedProfileData.append("image", image);
 
-    await dispatch(editEmployee({ id, data: fd }));
+    const res = await dispatch(editEmployee({ id, data: updatedProfileData }));
+    const updatedUser = res?.payload;
+    if (updatedUser) {
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    }
     dispatch(getEmployeeById(id));
   };
 
@@ -151,3 +157,4 @@ const EditEmployeeProfile = () => {
 };
 
 export default EditEmployeeProfile;
+

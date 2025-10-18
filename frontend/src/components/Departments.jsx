@@ -107,10 +107,10 @@ const Departments = () => {
         ) : !departments || departments.length === 0 ? (
           <p
             className={`text-center text-lg font-semibold ${
-              darkMode ? "text-[#82E0FA]" : "text-[#274472]"
+              darkMode ? "text-red-500" : "text-red-500"
             }`}
           >
-            There are no departments. Create one above.
+            There are no departments. Create 
           </p>
         ) : (
           <div
