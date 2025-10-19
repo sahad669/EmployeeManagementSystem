@@ -1,26 +1,26 @@
 import contactModel from "../models/contactModel.js";
-import { sendEmail } from "../sendEmail.js";
 
 export const createMessage = async (req, res) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ message: "Fill all the fields" });
   }
+
   try {
     const newMessage = await contactModel.create({ name, email, message });
-    await sendEmail(name, email, message);
     res.status(201).json({
       success: true,
-      message: "Message sent successfully",
+      message: "Message send successfully",
       newMessage,
     });
   } catch (error) {
-    console.error("Error sending message:", error);
-    res.status(500).json({ error: "Error sending message" });
+    console.error("Error saving message:", error);
+    res.status(500).json({ error: "Failed to save message" });
   }
 };
 
-// Get all messages
+
+// Get all messages 
 
 export const getAllMessages = async (req, res) => {
   try {
@@ -31,7 +31,6 @@ export const getAllMessages = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch messages" });
   }
 };
-
 export const deleteMessage = async (req, res) => {
   try {
     const id = req.params.id;

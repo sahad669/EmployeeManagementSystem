@@ -1,32 +1,44 @@
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import { sendMessage } from "../features/contactSlice";
+import { toast } from "react-hot-toast";
+import { createMessage } from "../features/contactSlice";
 
 const Contact = () => {
-  const { darkMode } = useSelector((state) => state.theme);
-  const { loading } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
+  const { darkMode } = useSelector((state) => state.theme); // for dark mode
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(sendMessage(data));
-    setData({ name: "", email: "", message: "" });
+
+    const { name, email, message } = form;
+    if (!name || !email || !message) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const result = await dispatch(createMessage({ name, email, message }));
+      if (result.payload?.success) {
+        // toast.success("Message sent successfully!");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -54,9 +66,9 @@ const Contact = () => {
           <input
             type="text"
             name="name"
-            value={data.name}
-            onChange={handleInput}
             placeholder="Full Name"
+            value={form.name}
+            onChange={handleChange}
             required
             className={`p-4 rounded-lg border transition focus:outline-none focus:ring-2 ${
               darkMode
@@ -67,9 +79,9 @@ const Contact = () => {
           <input
             type="email"
             name="email"
-            value={data.email}
-            onChange={handleInput}
             placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
             required
             className={`p-4 rounded-lg border transition focus:outline-none focus:ring-2 ${
               darkMode
@@ -81,9 +93,9 @@ const Contact = () => {
 
         <textarea
           name="message"
-          value={data.message}
-          onChange={handleInput}
           placeholder="Enter your message"
+          value={form.message}
+          onChange={handleChange}
           required
           rows="5"
           className={`w-full p-4 rounded-lg border mb-6 transition focus:outline-none focus:ring-2 resize-none ${
@@ -91,18 +103,14 @@ const Contact = () => {
               ? "bg-[#274472] border-[#198FFF] text-[#A1F6FF] placeholder-[#7DB9DB] focus:ring-[#47CFFF]"
               : "bg-[#F6FAFF] border-[#5B99ED] text-[#274472] placeholder-[#8AAEDC] focus:ring-[#198FFF]"
           }`}
-        ></textarea>
+        />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#47CFFF] hover:bg-[#82E0FA] text-[#112d4e] text-lg font-semibold py-3 rounded-lg shadow-md transition"
+          className="w-full bg-[#47CFFF] hover:bg-[#82E0FA] text-[#112d4e] text-lg font-semibold py-3 rounded-lg shadow-md transition disabled:opacity-50"
         >
-          {loading ? (
-            <Loader2 className="animate-spin w-5 h-5 mx-auto" />
-          ) : (
-            "Send Message"
-          )}
+          {loading ? <Loader2 className="animate-spin w-5 h-5 mx-auto" /> : "Send Message"}
         </button>
       </form>
     </motion.div>

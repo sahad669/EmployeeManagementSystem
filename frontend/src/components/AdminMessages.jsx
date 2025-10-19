@@ -1,22 +1,22 @@
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages,deleteMessage } from "../features/contactSlice";
-import { Loader2, Mail,Trash2 } from "lucide-react";
+import { fetchMessages, deleteMessage } from "../features/contactSlice";
+import { Loader2, Mail, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const AdminMessages = () => {
   const dispatch = useDispatch();
-  const { list, loading } = useSelector((state) => state.messages);
+  const { messages, loading, error } = useSelector((state) => state.messages);
   const { darkMode } = useSelector((state) => state.theme);
 
   useEffect(() => {
     dispatch(fetchMessages());
   }, [dispatch]);
 
-const handleDelete = (id)=>{
-  dispatch(deleteMessage(id))
-}
-
+  const handleDelete = (id) => {
+    dispatch(deleteMessage(id));
+  };
 
   if (loading) {
     return (
@@ -27,6 +27,10 @@ const handleDelete = (id)=>{
         />
       </div>
     );
+  }
+
+  if (error) {
+    return <p className="text-red-500 text-center py-4">{error}</p>;
   }
 
   return (
@@ -52,17 +56,13 @@ const handleDelete = (id)=>{
         </h2>
       </div>
 
-      {list.length === 0 ? (
-        <p
-          className={`text-center italic ${
-            darkMode ? "text-red-500" : "text-red-500"
-          }`}
-        >
+      {messages.length === 0 ? (
+        <p className={`text-center italic ${darkMode ? "text-red-500" : "text-red-500"}`}>
           No messages yet.
         </p>
       ) : (
         <div className="space-y-6">
-          {list.map((msg, index) => (
+          {messages.map((msg, index) => (
             <motion.div
               key={msg._id || index}
               initial={{ opacity: 0, y: 10 }}
@@ -78,37 +78,24 @@ const handleDelete = (id)=>{
               <p className="font-semibold text-lg mb-1">
                 <span className="opacity-80">👤</span> {msg.name}
               </p>
-              <p
-                className={`text-sm mb-3 ${
-                  darkMode ? "text-[#A1F6FF]/80" : "text-[#274472]/80"
-                }`}
-              >
+              <p className={`text-sm mb-3 ${darkMode ? "text-[#A1F6FF]/80" : "text-[#274472]/80"}`}>
                 ✉️ {msg.email}
               </p>
-              <p
-                className={`mb-3 leading-relaxed ${
-                  darkMode ? "text-[#C7E9FF]" : "text-[#1E3A5F]"
-                }`}
-              >
+              <p className={`mb-3 leading-relaxed ${darkMode ? "text-[#C7E9FF]" : "text-[#1E3A5F]"}`}>
                 “{msg.message}”
               </p>
-              <p
-                className={`text-xs text-right italic ${
-                  darkMode ? "text-[#7DB9DB]" : "text-[#5B99ED]"
-                }`}
-              >
+              <p className={`text-xs text-right italic ${darkMode ? "text-[#7DB9DB]" : "text-[#5B99ED]"}`}>
                 {new Date(msg.createdAt).toLocaleString()}
               </p>
-               <button
-                          onClick={() => handleDelete(msg._id)}
-                          className="flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition shadow-md mx-auto"
-                        >
-                          <Trash2 size={18} />
-                          Delete
-                        </button>
+              <button
+                onClick={() => handleDelete(msg._id)}
+                className="flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition shadow-md mx-auto"
+              >
+                <Trash2 size={18} />
+                Delete
+              </button>
             </motion.div>
           ))}
-          
         </div>
       )}
     </motion.div>
@@ -116,4 +103,3 @@ const handleDelete = (id)=>{
 };
 
 export default AdminMessages;
-

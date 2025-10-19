@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   const { departments } = useSelector((state) => state.department);
   const { employees } = useSelector((state) => state.employee);
   const { darkMode } = useSelector((state) => state.theme);
-  const { list } = useSelector((state) => state.messages);
+const { messages} = useSelector((state) => state.messages);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
                 >
                   <span className="text-6xl mb-4">📩</span>
                   <h1 className="text-xl font-bold">MESSAGES</h1>
-                  <span className="text-3xl font-bold mt-1">{list.length}</span>
+                  <span className="text-3xl font-bold mt-1">{messages.length}</span>
                 </motion.div>
               </div>
 
