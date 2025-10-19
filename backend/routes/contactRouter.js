@@ -3,8 +3,8 @@ import { createMessage, getAllMessages,deleteMessage } from "../controllers/cont
 
 const router = express.Router();
 
-router.post("/", createMessage); 
-router.get("/", getAllMessages); 
-router.delete("/:id", deleteMessage)
+router.post("/sendMessage", createMessage); 
+router.get("/allMessage", getAllMessages); 
+router.delete("/delete/:id", deleteMessage)
 
 export default router;

@@ -4,13 +4,13 @@ import toast from "react-hot-toast";
 
 //  Fetch all messages 
 export const fetchMessages = createAsyncThunk("messages/fetchMessages", async () => {
-  const res = await axiosInstants.get("/contact");
+  const res = await axiosInstants.get("/contact/allMessage");
   return res.data.messages;
 });
 
 // Send a new message 
 export const sendMessage = createAsyncThunk("messages/sendMessage", async (data) => {
-  const res = await axiosInstants.post("/contact", data);
+  const res = await axiosInstants.post("/contact/sendMessage", data);
   if (res.data.success) {
     toast.success(res.data.message || "Message sent successfully!");
   } else {
@@ -21,7 +21,7 @@ export const sendMessage = createAsyncThunk("messages/sendMessage", async (data)
 
 export const deleteMessage = createAsyncThunk("messages/deleteMessage",async(id)=>{
   try {
-      let res = await axiosInstants.delete(`/contact/${id}`)
+      let res = await axiosInstants.delete(`/contact/delete/${id}`)
       toast.success(res.data.message)
       return id
   } catch (error) {
