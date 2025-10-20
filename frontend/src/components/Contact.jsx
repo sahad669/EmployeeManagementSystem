@@ -8,7 +8,7 @@ import { createMessage } from "../features/contactSlice";
 
 const Contact = () => {
   const dispatch = useDispatch();
-  const { darkMode } = useSelector((state) => state.theme); // for dark mode
+  const { darkMode } = useSelector((state) => state.theme); 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ const Contact = () => {
     try {
       const result = await dispatch(createMessage({ name, email, message }));
       if (result.payload?.success) {
-        // toast.success("Message sent successfully!");
+      
         setForm({ name: "", email: "", message: "" });
       } else {
         toast.error("Failed to send message");

@@ -2,7 +2,6 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-// ================= REGISTER =================
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -34,7 +33,7 @@ export const register = async (req, res) => {
   }
 };
 
-// ================= LOGIN =================
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -43,7 +42,6 @@ export const login = async (req, res) => {
       return res.status(400).json({ success: false, message: "Enter Email and Password" });
     }
 
-    // ✅ populate department so employee details are available
     const user = await userModel.findOne({ email }).populate("department", "department");
     if (!user) {
       return res.status(400).json({ success: false, message: "Email Not Found Register!" });
@@ -80,7 +78,6 @@ export const login = async (req, res) => {
 };
 
 
-// ================= CREATE EMPLOYEE =================
 export const createEmployee = async (req, res) => {
   try {
     const { name, email, password, role, department, phone } = req.body;
@@ -125,7 +122,6 @@ export const createEmployee = async (req, res) => {
   }
 };
 
-// ================= GET ALL EMPLOYEES =================
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await userModel
@@ -142,26 +138,26 @@ export const getAllEmployees = async (req, res) => {
   }
 };
 
-// ================= EDIT EMPLOYEE =================
+
 export const editEmployee = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = { ...req.body };
 
-    // ✅ Only hash password if provided, otherwise keep old password
+    
     if (!updates.password) {
-      delete updates.password; // remove empty password so DB doesn't overwrite
+      delete updates.password; 
     } else {
       updates.password = await bcrypt.hash(updates.password, 10);
     }
 
-    // Handle uploaded image if exists
+    
     if (req.file) {
       updates.imageurl = req.file.path;
       updates.public_id = req.file.filename;
     }
 
-    // Update employee in DB
+    
     const updated = await userModel
       .findByIdAndUpdate(id, updates, { new: true })
       .populate("department", "department");
@@ -177,7 +173,7 @@ export const editEmployee = async (req, res) => {
 };
 
 
-// ================= DELETE EMPLOYEE =================
+
 export const deleteEmployee = async (req, res) => {
   try {
     const id = req.params.id;
@@ -191,7 +187,6 @@ export const deleteEmployee = async (req, res) => {
   }
 };
 
-// ================= GET EMPLOYEE BY ID =================
 export const getEmployeeById = async (req, res) => {
   try {
     const id = req.params.id;
