@@ -23,7 +23,7 @@ const ChatBot = ({ isOpen, onClose }) => {
         <div
           className="fixed top-20 right-7 w-80 md:w-96 bg-gradient-to-br from-[#A5CDF2] to-[#47CFFF] 
                   dark:from-[#112d4e] dark:to-[#274472] text-[#112d4e] dark:text-[#A1F6FF] 
-                  shadow-2xl rounded-3xl p-4 pt-5 flex flex-col gap-3 z-50 transition-all duration-300"
+                  shadow-2xl rounded-3xl p-4 pt-10 flex flex-col gap-3 z-50 transition-all duration-300"
         >
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto max-h-96 p-2 space-y-2">
