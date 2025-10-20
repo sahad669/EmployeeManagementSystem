@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,8 +8,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#0A2540] via-[#274472] to-[#82E0FA] relative overflow-hidden px-4 sm:px-6 lg:px-10">
-      <div className="flex flex-col justify-center gap-8 items-start w-full md:w-1/2 z-10">
+    <div className="min-h-screen w-full flex flex-col-reverse md:flex-row items-center justify-center bg-gradient-to-br from-[#0A2540] via-[#274472] to-[#82E0FA] relative overflow-hidden px-4 sm:px-6 lg:px-10">
+      
+    
+      <div className="flex flex-col justify-center gap-8 items-center md:items-start text-center md:text-left w-full md:w-1/2 z-10 mt-6 md:mt-0">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -16,6 +20,7 @@ const Home = () => {
         >
           Employee Management System
         </motion.h1>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -24,6 +29,7 @@ const Home = () => {
         >
           "Great employees don’t just work for you, they grow with you."
         </motion.p>
+
         <motion.button
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -35,16 +41,17 @@ const Home = () => {
         </motion.button>
       </div>
 
+    
       <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7, delay: 1 }}
-        className="hidden md:flex items-center justify-center w-1/2 h-full"
+        initial={{ opacity: 0, y: -40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.3 }}
+        className="flex items-center justify-center w-full md:w-1/2 md:mb-0"
       >
         <img
           src="/images/1606.m00.i125.n016.S.c12.Business people team work managment structure vector illustration (1).png"
           alt="Employee management illustration"
-          className="object-cover max-h-[65vh] mx-auto border-none"
+          className="object-contain max-h-[40vh] md:max-h-[65vh] mx-auto border-none drop-shadow-lg"
         />
       </motion.div>
 
