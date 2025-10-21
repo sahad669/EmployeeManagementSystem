@@ -34,7 +34,7 @@ const EmployeeSidebar = ({
         `}
         aria-label="Employee Sidebar Navigation"
       >
-        <nav className="flex-1 flex flex-col space-y-3 mt-14 overflow-y-auto pb-6">
+        <nav className="flex-1 flex flex-col space-y-3 mt-20 overflow-y-auto pb-6">
           {/* Dashboard */}
           <button
             onClick={() => setActiveSection("dashboard")}
