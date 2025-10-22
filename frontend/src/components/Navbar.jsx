@@ -1,3 +1,4 @@
+
 import { useSelector } from "react-redux";
 import { LogOut, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +21,7 @@ const Navbar = ({ title, onToggleSidebar }) => {
             : "bg-gradient-to-r from-[#E3EDF7] via-[#F6F9FC] to-[#A5CDF2] border-[#5B99ED]/20"
         }`}
     >
-      {/*  Hamburger and title */}
+      {/* Hamburger and title */}
       <div className="flex items-center space-x-3">
         <button
           onClick={onToggleSidebar}
@@ -66,20 +67,7 @@ const Navbar = ({ title, onToggleSidebar }) => {
                 {user.role}
               </div>
             </>
-          ) : (
-            <>
-              
-              <div className="text-xs font-bold text-[#82E0FA] capitalize">
-                Not logged in
-              </div>
-            </>
-          )}
-        </div>
-
-        <div
-          className={`block sm:hidden font-semibold text-xs capitalize truncate max-w-[70px] text-[#82E0FA]`}
-        >
-          {user && user.role ? user.role : "Admin"}
+          ) : null}
         </div>
 
         <button

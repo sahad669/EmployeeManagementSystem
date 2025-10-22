@@ -27,7 +27,7 @@ export const register = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.status(201).json({ success: true, message: "Registered successfully", token });
+    res.status(201).json({ success: true, message: "Registered successfully,Logged in", token });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error", error: error.message });
   }

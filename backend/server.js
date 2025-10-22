@@ -14,8 +14,6 @@ app.use(express.json());
 // app.use(cors({origin:"https://employee-management-system-eight-sigma.vercel.app/"}));
 app.use(cors())
 
-console.log("API Key:", process.env.OPENAI_API_KEY);
-
 const openAi = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.post('/api/chat',async(req,res)=>{

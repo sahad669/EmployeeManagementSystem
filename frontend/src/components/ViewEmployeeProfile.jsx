@@ -39,7 +39,7 @@ const ViewEmployeeProfile = () => {
           darkMode ? "text-[#FFCC00]" : "text-[#0A0A0A]"
         }`}
       >
-        No profile found
+        Employee not found
       </p>
     );
 
