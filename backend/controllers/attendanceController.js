@@ -23,7 +23,7 @@ export const markAttendance = async (req, res) => {
   }
 };
 
-// ✅ Get Attendance for Employee
+// Get Attendance for Employee
 export const getAttendance = async (req, res) => {
   try {
     const { employeeId } = req.params; 

@@ -31,9 +31,9 @@ export const getAttendance = createAsyncThunk(
 );
 export const deleteAttendance = createAsyncThunk(
   "attendance/deleteAttendance",
-  async (attendanceId) => {
+  async (id) => {
     try {
-      const res = await axiosInstants.delete(`attendance/delete/${attendanceId}`);
+      const res = await axiosInstants.delete(`attendance/delete/${id}`);
       toast.success(res.data.message);
       return res.data.id
     } catch (error) {
@@ -57,8 +57,23 @@ const attendanceSlice = createSlice({
       })
       .addCase(markAttendance.fulfilled, (state, action) => {
         state.loading = false;
+      
         if (action.payload?.attendance) {
-          state.records.push(action.payload.attendance);
+          const updatedRecord = action.payload.attendance;
+          const existingRecord = state.records.findIndex(
+            (rcod) =>
+              rcod.employee?._id === updatedRecord.employee?._id &&
+              new Date(rcod.date).toDateString() ===
+                new Date(updatedRecord.date).toDateString()
+          );
+
+          if (existingRecord !== -1) {
+            // Update existing record
+            state.records[existingRecord] = updatedRecord;
+          } else {
+            // Add new record if not found
+            state.records.push(updatedRecord);
+          }
         }
       })
       .addCase(markAttendance.rejected, (state, action) => {
@@ -94,3 +109,7 @@ const attendanceSlice = createSlice({
 });
 
 export default attendanceSlice.reducer;
+
+
+
+
