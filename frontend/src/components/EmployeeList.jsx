@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 const EmployeeList = ({ onViewEmployee }) => {
   const dispatch = useDispatch();
   const { employees, loading } = useSelector((state) => state.employee);
+   const { departments } = useSelector((state) => state.department);
   const { darkMode } = useSelector((state) => state.theme);
 
   const [search, setSearch] = useState("");
@@ -36,7 +37,7 @@ const EmployeeList = ({ onViewEmployee }) => {
   const filteredEmployees = (employees || [])
     .filter((emp) => emp.name?.toLowerCase().includes(search.toLowerCase()))
     .filter((emp) =>
-      departmentFilter ? emp.department?.department === departmentFilter : true
+      departmentFilter ? emp.department?._id === departmentFilter : true
     );
 
   return (
@@ -81,12 +82,10 @@ const EmployeeList = ({ onViewEmployee }) => {
               : "bg-[#F6FAFF] border-[#5B99ED] text-[#274472] focus:ring-[#198FFF]"
           }`}
         >
-          <option value="">All Departments</option>
-          {[...new Set((employees || []).map((e) => e.department?.department))]
-            .filter(Boolean)
-            .map((dep, i) => (
-              <option key={i} value={dep}>
-                {dep}
+          <option value="">Select Department</option>
+            {departments?.map((dep) => (
+              <option key={dep._id} value={dep._id}>
+                {dep.department}
               </option>
             ))}
         </select>
