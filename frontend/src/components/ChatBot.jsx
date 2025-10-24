@@ -11,8 +11,8 @@ const ChatBot = ({ isOpen, onClose }) => {
     setMessage("");
 
     try {
-      const res = await axios.post("http://localhost:4000/api/chat", { message });
-      setChat([...newChat, { sender: "bot", text: ( res).data.reply }]);
+      const res = axios.post("http://localhost:4000/api/chat", { message });
+      setChat([...newChat, { sender: "bot", text: (await res).data.reply }]);
     } catch {
       setChat([...newChat, { sender: "bot", text: "error connecting" }]);
     }
