@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
-import axios from "axios";
+import axiosInstants from "../axiosInstants";
 const ChatBot = ({ isOpen, onClose }) => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 
   const sendMessage = async () => {
-    const newChat = [...chat, { sender: "user", message }];
-    setChat(newChat);
-    setMessage("");
+  const newChat = [...chat, { sender: "user", message }];
+  setChat(newChat);
+  setMessage("");
 
-    try {
-      const res = axios.post("http://localhost:4000/api/chat", { message });
-      setChat([...newChat, { sender: "bot", text: (await res).data.reply }]);
-    } catch {
-      setChat([...newChat, { sender: "bot", text: "error connecting" }]);
-    }
-  };
+  try {
+    const res = await axiosInstants.post("/chat", { message });
+    setChat([...newChat, { sender: "bot", text: res.data.reply }]);
+  } catch (error) {
+    console.error("Chat error:", error);
+    setChat([...newChat, { sender: "bot", text: "error connecting" }]);
+  }
+};
   return (
     <>
       {isOpen && (
